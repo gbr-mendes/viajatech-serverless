@@ -1,0 +1,23 @@
+{
+  "name": "viajatech-serverless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gbr-mendes/viajatech-serverless.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gbr-mendes/viajatech-serverless/issues"
+  },
+  "homepage": "https://github.com/gbr-mendes/viajatech-serverless#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1181.0"
+  }
+}
