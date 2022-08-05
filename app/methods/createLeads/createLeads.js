@@ -7,13 +7,15 @@ const leadValidator = require('./leadValidator')
 const daynamoDB = new AWS.DynamoDB.DocumentClient()
 
 const addUserToGroup = require('./addUserToGroup')
+const defaultHeader = require('./constants/defaultHeader')
 
 const createLeads = async (event) => {
     const { userInfo } = JSON.parse(event.body)
     if (!userInfo) {
         return {
             statusCode: 400,
-            body: JSON.stringify({ error: "Payload inválida" })
+            body: JSON.stringify({ error: "Payload inválida" }),
+            headers: defaultHeader
         }
     }
 
@@ -22,7 +24,8 @@ const createLeads = async (event) => {
         const { message } = error.details[0]
         return {
             statusCode: 400,
-            body: JSON.stringify({ error: message })
+            body: JSON.stringify({ error: message }),
+            headers: defaultHeader
         }
     }
 
@@ -65,12 +68,14 @@ const createLeads = async (event) => {
         await addUserToGroup(process.env.POOL_ID, "Leads", userInfo.email)
         return {
             statusCode: 201,
-            body: JSON.stringify({ sucess: "Usuário registrado com sucesso" })
+            body: JSON.stringify({ sucess: "Usuário registrado com sucesso" }),
+            headers: defaultHeader
         }
     } catch (error) {
         return {
             statusCode: error.statusCode,
-            body: JSON.stringify({ error: error.message })
+            body: JSON.stringify({ error: error.message }),
+            headers: defaultHeader
         }
     }
 }

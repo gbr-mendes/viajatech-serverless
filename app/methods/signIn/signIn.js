@@ -1,6 +1,7 @@
 const AWS = require("aws-sdk");
 const cognito = new AWS.CognitoIdentityServiceProvider();
 
+const defaultHeader = require('./constants/defaultHeader');
 
 const signIn = async (event) => {
     const body = JSON.parse(event.body)
@@ -20,19 +21,14 @@ const signIn = async (event) => {
             body: JSON.stringify({
                 message: "Logado com sucesso", accessToken
             }),
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT',
-                'Access-Control-Allow-Credentials': true
-            }
+            headers: defaultHeader
         }
     } catch (error) {
         console.log(error)
         return {
             statusCode: error.statusCode,
-            body: JSON.stringify({ error: error.message })
+            body: JSON.stringify({ error: error.message }),
+            headers: defaultHeader
         }
     }
 }

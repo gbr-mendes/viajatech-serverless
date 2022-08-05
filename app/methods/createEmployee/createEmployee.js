@@ -9,6 +9,7 @@ const validateByGroup = require('./validators/validateByGroup')
 
 const mapRoleByPosition = require('./utils/mapRoleByPosition');
 const generateUUID = require('./utils/generateUUID');
+const defaultHeader = require('./constants/defaultHeader');
 
 const createEmployee = async (event) => {
     const body = JSON.parse(event.body)
@@ -19,7 +20,8 @@ const createEmployee = async (event) => {
     if (!isAllowed) {
         return {
             statusCode: 403,
-            body: JSON.stringify({ error: "Você não tem permissão para realizar esta ação" })
+            body: JSON.stringify({ error: "Você não tem permissão para realizar esta ação" }),
+            headers: defaultHeader
         }
     }
 
@@ -30,7 +32,8 @@ const createEmployee = async (event) => {
     if (userError) {
         return {
             statusCode: 400,
-            body: JSON.stringify({ error: userError })
+            body: JSON.stringify({ error: userError }),
+            headers: defaultHeader
         }
     }
 
@@ -38,7 +41,8 @@ const createEmployee = async (event) => {
     if (employeeError) {
         return {
             statusCode: 400,
-            body: JSON.stringify({ error: employeeError.details[0].message })
+            body: JSON.stringify({ error: employeeError.details[0].message }),
+            headers: defaultHeader
         }
     }
 
@@ -51,7 +55,8 @@ const createEmployee = async (event) => {
         if (signUpError) {
             return {
                 statusCode: signUpError.statusCode,
-                body: JSON.stringify({ error: signUpError.message })
+                body: JSON.stringify({ error: signUpError.message }),
+                headers: defaultHeader
             }
         }
 
@@ -72,13 +77,15 @@ const createEmployee = async (event) => {
 
         return {
             statusCode: 201,
-            body: JSON.stringify({ message: "Colaborador registrado com sucesso", statusCode: 20 })
+            body: JSON.stringify({ message: "Colaborador registrado com sucesso", statusCode: 20 }),
+            headers: defaultHeader
         }
     } catch (error) {
         console.log(error)
         return {
             statusCode: error.statusCode,
-            body: JSON.stringify({ error: error.message })
+            body: JSON.stringify({ error: error.message }),
+            headers: defaultHeader
         }
     }
 }
